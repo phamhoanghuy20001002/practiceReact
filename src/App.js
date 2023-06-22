@@ -1,25 +1,51 @@
-import logo from './logo.svg';
-import './App.css';
+import './App.scss';
+import Header from './components/Header';
+import Container from 'react-bootstrap/Container';
+import { ToastContainer, toast } from 'react-toastify';
 
+import { useEffect } from 'react'
+import AppRouter from './router/AppRouter';
+import { useSelector, useDispatch } from 'react-redux'
+import { handleRefresh } from './redux/actions/userActions'
 function App() {
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      // loginContext(localStorage.getItem('email'), (localStorage.getItem('token')))
+      dispatch(handleRefresh())
+    }
+  }, [])
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Hello world React with Hoi Dan IT
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <div></div>
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <div className='app-container'>
+
+        <Header></Header>
+        <Container>
+
+          <AppRouter />
+
+
+        </Container>
+
+      </div>
+
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+      {/* Same as */}
+
+    </>
+
   );
 }
 
